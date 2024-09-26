@@ -706,6 +706,28 @@
                  "width":99.3087369560686,
                  "x":463.745268994808,
                  "y":403.838711878444
+                }, 
+                {
+                 "height":436.112122315253,
+                 "id":25,
+                 "name":"gateArea",
+                 "rotation":0,
+                 "type":"area",
+                 "visible":true,
+                 "width":340.735347651984,
+                 "x":342.919548598471,
+                 "y":227.156898434656
+                }, 
+                {
+                 "height":0,
+                 "id":26,
+                 "name":"",
+                 "rotation":0,
+                 "type":"",
+                 "visible":true,
+                 "width":0,
+                 "x":359.665089188205,
+                 "y":805.970149253731
                 }],
          "opacity":1,
          "type":"objectgroup",
@@ -1096,7 +1118,7 @@
          "y":0
         }],
  "nextlayerid":103,
- "nextobjectid":25,
+ "nextobjectid":27,
  "orientation":"orthogonal",
  "properties":[
         {

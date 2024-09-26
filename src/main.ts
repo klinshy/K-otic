@@ -82,7 +82,7 @@ function handleGateAnimation(areaName: string, frameCount: number) {
     };
 
     WA.room.area.onEnter(areaName).subscribe(() => animate(true));
-    WA.room.area.onLeave(areaName).subscribe(() => animate(false));
+    WA.room.area.onLeave("gateArea").subscribe(() => animate(false));
 }
 
 // Animationen für die Area "openGate" steuern
