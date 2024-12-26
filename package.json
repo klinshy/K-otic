@@ -21,6 +21,9 @@
     "wa-map-optimizer-vite": "^1.1.29"
   },
   "dependencies": {
+    "@typebot.io/js": "^0.3.27",
+    "@typebot.io/nextjs": "^0.3.27",
+    "@typebot.io/react": "^0.3.27",
     "@workadventure/scripting-api-extra": "^1.8.1"
   }
 }
