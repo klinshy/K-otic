@@ -1186,6 +1186,50 @@
                  "width":32,
                  "x":770.1328125,
                  "y":152.021205357143
+                }, 
+                {
+                 "height":67.3099,
+                 "id":37,
+                 "name":"fishingGame_1",
+                 "properties":[
+                        {
+                         "name":"openWebsite",
+                         "type":"string",
+                         "value":"http:\/\/localhost:3000\/"
+                        }, 
+                        {
+                         "name":"openWebsiteAllowApi",
+                         "type":"bool",
+                         "value":true
+                        }],
+                 "rotation":0,
+                 "type":"area",
+                 "visible":true,
+                 "width":79.0393,
+                 "x":684.647016666667,
+                 "y":15.011716666667
+                }, 
+                {
+                 "height":67.3099,
+                 "id":38,
+                 "name":"h5p",
+                 "properties":[
+                        {
+                         "name":"openWebsite",
+                         "type":"string",
+                         "value":".\/Modul_2.3.html"
+                        }, 
+                        {
+                         "name":"openWebsiteAllowApi",
+                         "type":"bool",
+                         "value":true
+                        }],
+                 "rotation":0,
+                 "type":"area",
+                 "visible":true,
+                 "width":79.0393,
+                 "x":750.98035,
+                 "y":98.34505
                 }],
          "opacity":1,
          "type":"objectgroup",
@@ -1194,7 +1238,7 @@
          "y":0
         }],
  "nextlayerid":107,
- "nextobjectid":37,
+ "nextobjectid":39,
  "orientation":"orthogonal",
  "properties":[
         {

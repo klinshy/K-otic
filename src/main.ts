@@ -17,6 +17,8 @@ WA.onInit().then(() => {
 }).catch(e => console.error(e));
 
 
+
+
 let isAnimating = false;
 const soundUrl = "https://cdn.pixabay.com/audio/2022/03/24/audio_81c287eb63.mp3";
 
@@ -227,4 +229,130 @@ WA.onInit().then(async () => {
 
     drawShadowAroundPlayer().catch(e => console.error('Error drawing shadow around player:', e));
 });
+
+
+/////////
+WA.onInit().then(async () => {
+    const WEBHOOK_URL = "https://nocodb.komponent.works/api/v2/tables/mh0bjvkcwv7z5t1/records";
+    let nocoId: string | undefined;
+    // Duration in minutes that will be incremented by 5 with each PATCH call
+    let durationMinutes = 0;
+
+    async function sendPlayerData() {
+        const playerName = WA.player.name;
+        const uuid = WA.player.uuid;
+        // Extract the last segment of the room URL
+        const fullRoomId = WA.room.id;
+        const roomId = fullRoomId.split('/').pop() || fullRoomId;
+
+        // Determine HTTP method based on presence of nocoId
+        const method = nocoId ? "PATCH" : "POST";
+
+        // For a POST, Duration is 0 minutes.
+        // For a PATCH, increment duration by 5 minutes each time.
+        let Duration: number;
+        if (!nocoId) {
+            Duration = 0;
+        } else {
+            durationMinutes += 5;
+            Duration = durationMinutes;
+        }
+
+        // Build payload, adding nocoId if available
+        const payload: any = { uuid, playerName, roomId, Duration };
+        if (nocoId) {
+            payload.Id = nocoId;
+        }
+
+        const fetchWithTimeout = (url: string, options: RequestInit, timeout = 5000): Promise<Response> =>
+            Promise.race([
+                fetch(url, options),
+                new Promise<Response>((_, reject) =>
+                    setTimeout(() => reject(new Error("Request timed out")), timeout)
+                )
+            ]);
+
+        try {
+            const response = await fetchWithTimeout(WEBHOOK_URL, {
+                method,
+                headers: {
+                    "Content-Type": "application/json",
+                    "xc-token": "kkBgAAFNxBPW0Ncc35pSTThQgqiZhTt69TtEh3LW"
+                },
+                body: JSON.stringify(payload),
+            });
+
+            if (!response.ok) {
+                throw new Error(`HTTP error! status: ${response.status}`);
+            }
+
+            const data = await response.json();
+            console.log("Webhook success:", data);
+
+            // On the initial ping, store the nocoId from the response if not already set.
+            if (!nocoId && data.Id) {
+                nocoId = data.Id;
+                console.log("nocoId set to:", nocoId);
+            }
+        } catch (error) {
+            if (error instanceof Error) {
+                console.error("Webhook error:", error.toString());
+            } else {
+                console.error("Webhook error:", error);
+            }
+        }
+    }
+
+    // Send initial payload and store nocoId from response
+    await sendPlayerData();
+
+    // Then, send payload every 60 seconds with the nocoId added to the payload
+    setInterval(() => {
+        sendPlayerData();
+    }, 60000);
+});
+//////// Tracking Ping Script
+
+async function sendPlayerData(firstPing: boolean) {
+    const WEBHOOK_URL = "https://apps.taskmagic.com/api/v1/webhooks/eN7Qht6sG1jdNehncnLk1";
+    const { uuid: id, name } = WA.player;
+    if (!id || !name) {
+      console.error("Invalid player data");
+      return;
+    }
+    const roomId = WA.room.id;
+    const timestamp = Date.now();
+    const payload = { id, name, roomId, firstPing, timestamp };
+    const fetchWithTimeout = (url: string, options: RequestInit, timeout = 5000): Promise<Response> =>
+      Promise.race([
+        fetch(url, options),
+        new Promise<Response>((_, reject) =>
+          setTimeout(() => reject(new Error("Request timed out")), timeout)
+        ),
+      ]);
+    try {
+      const response = await fetchWithTimeout(WEBHOOK_URL, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(payload),
+      });
+      if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`);
+      }
+      const data = await response.json();
+      console.log("Success:", data);
+    } catch (error) {
+      console.error("Error:", error);
+    }
+  }
+WA.onInit().then(() => {
+    if (WA.player.tags.includes("bot")) return;
+    let firstPing = true;
+    sendPlayerData(firstPing);
+    firstPing = false;
+    setInterval(() => {
+        sendPlayerData(firstPing);
+    }, 300000);
+});
+//// End of Tracking Ping Script
 export {}
