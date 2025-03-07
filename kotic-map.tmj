@@ -1217,7 +1217,7 @@
                         {
                          "name":"openWebsite",
                          "type":"string",
-                         "value":".\/Modul_2.3.html"
+                         "value":".\/test.html"
                         }, 
                         {
                          "name":"openWebsiteAllowApi",
@@ -1267,7 +1267,7 @@
          "value":"src\/main.ts"
         }],
  "renderorder":"right-down",
- "tiledversion":"1.11.0",
+ "tiledversion":"1.11.2",
  "tileheight":32,
  "tilesets":[
         {
